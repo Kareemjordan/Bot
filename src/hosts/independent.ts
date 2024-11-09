@@ -2,11 +2,13 @@ import * as cheerio from "cheerio";
 
 import { fetchHTML } from "../utils/data";
 
+const baseUri = "https://www.independent.co.uk";
+const newsPath = "/topic/liverpool-fc";
+export const hashTag = "#TheIndependent";
+
 const main = async (): Promise<string> => {
-  let articleUrl = "";
-  const data: string | undefined = await fetchHTML(
-    "https://www.independent.co.uk/topic/liverpool-fc"
-  );
+  let articleUri = "";
+  const data: string | undefined = await fetchHTML(`${baseUri}${newsPath}`);
   const $ = cheerio.load(data);
   const title = $("body").find("h2:first");
   if (title) {
@@ -15,14 +17,14 @@ const main = async (): Promise<string> => {
       const href = anchor.attr("href");
       if (href) {
         if (href.includes("://")) {
-          articleUrl = href;
+          articleUri = href;
         } else {
-          articleUrl = `https://www.independent.co.uk${href}`;
+          articleUri = `${baseUri}${href}`;
         }
       }
     }
   }
-  return articleUrl;
+  return articleUri;
 };
 
 export default main;

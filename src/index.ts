@@ -1,12 +1,12 @@
-import { AtpAgent, RichText } from "@atproto/api";
+import { AtpAgent } from "@atproto/api";
 import * as dotenv from "dotenv";
-import axios from "axios";
-import * as cheerio from "cheerio";
 
-import { fetchHTML } from "./utils/data";
-import { post } from "./utils/post";
+import { scrapeMeta } from "./utils/data";
+import post from "./utils/post";
 
-import independent from "./hosts/independent";
+import independent, {
+  hashTag as independentHashtag,
+} from "./hosts/independent";
 
 dotenv.config();
 
@@ -20,38 +20,23 @@ async function main() {
     password: process.env.BSKY_PASSWORD as string,
   });
 
-  const indy = await independent();
+  const indepedentUri = await independent();
 
-  if (indy) {
-    const data: string | undefined = await fetchHTML(indy);
-    const $ = cheerio.load(data);
-    const uri = indy;
-    const title = $('meta[property="og:title"]').attr("content");
-    const description = $('meta[property="og:description"]').attr("content");
+  if (indepedentUri) {
+    const { title, description, thumb } = await scrapeMeta(
+      agent,
+      indepedentUri
+    );
 
     if (title && description) {
-      const image = $('meta[property="og:image"]').attr("content");
-      let uploadedBlob = undefined;
-      // const uri = 'https://www.independent.co.uk/sport/football/liverpool-injuries-team-news-arne-slot-tsimikas-robertson-b2643620.html'
-      // const title = 'Slot gives verdict on key battle for position at Liverpool'
-      // const description = 'The Reds boss also has a decision to make in attack after Luis Diaz scored three'
-      // const image = 'https://static.independent.co.uk/2024/11/08/09/newFile-2.jpg?quality=75&width=1200&auto=webp'
-
-      if (image) {
-        const remoteImage = await axios.get(image, {
-          responseType: "arraybuffer",
-        });
-        const imageContentType = remoteImage.headers["content-type"];
-        const imageBlob = remoteImage.data;
-        const upload = await agent.uploadBlob(imageBlob, {
-          encoding: imageContentType,
-        });
-        if (upload) {
-          uploadedBlob = upload.data.blob;
-        }
-      }
-
-      await post(agent, "#Indy", uri, title, description, uploadedBlob);
+      await post(
+        agent,
+        independentHashtag,
+        indepedentUri,
+        title,
+        description,
+        thumb
+      );
     }
   }
 }

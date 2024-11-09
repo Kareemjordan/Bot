@@ -1,6 +1,6 @@
 import { AtpAgent, BlobRef, RichText } from "@atproto/api";
 
-export const post = async (
+const post = async (
   agent: AtpAgent,
   postText: string,
   uri: string,
@@ -9,7 +9,7 @@ export const post = async (
   thumb: BlobRef | undefined
 ) => {
   const rt = new RichText({
-    text: postText,
+    text: `${postText} #LFC`,
   });
 
   await rt.detectFacets(agent);
@@ -29,3 +29,5 @@ export const post = async (
     },
   });
 };
+
+export default post;
