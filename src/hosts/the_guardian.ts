@@ -4,9 +4,9 @@ import { fetchHTML } from "../utils/data";
 
 const baseUri = "https://www.theguardian.com";
 const newsPath = "/football/liverpool";
-export const hashTag = "#TheGuardian";
+const hashTag = "#TheGuardian";
 
-const main = async (): Promise<string> => {
+const main = async (): Promise<{ articleUri: string; hashTag: string }> => {
   let articleUri = "";
   const data: string | undefined = await fetchHTML(`${baseUri}${newsPath}`);
   const $ = cheerio.load(data);
@@ -24,7 +24,7 @@ const main = async (): Promise<string> => {
       }
     }
   }
-  return articleUri;
+  return { articleUri, hashTag };
 };
 
 export default main;
