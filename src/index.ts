@@ -63,19 +63,14 @@ async function main() {
     theIndepedentData,
   ];
 
-  // hostData.forEach(async (hd) => {
-  //   const { articleUri, hashTag } = hd;
-  //   if (!previousUris.includes(articleUri)) {
-  //     const { title, description, thumb } = await scrapeMeta(agent, articleUri);
-  //     if (title && description) {
-  //       await post(agent, hashTag, articleUri, title, description, thumb);
-  //     }
-  //   }
-  // });
-
-  await agent.post({
-    $type: "app.bsky.feed.post",
-    text: "Hello world",
+  hostData.forEach(async (hd) => {
+    const { articleUri, hashTag } = hd;
+    if (!previousUris.includes(articleUri)) {
+      const { title, description, thumb } = await scrapeMeta(agent, articleUri);
+      if (title && description) {
+        await post(agent, hashTag, articleUri, title, description, thumb);
+      }
+    }
   });
 }
 
