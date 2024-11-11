@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "npx nodemon",
     "build": "rimraf ./build && tsc",
-    "start": "npm run build && node build/index.js"
+    "start": "npm run build && node build/index.js",
+    "log-hosts": "npx ts-node ./src/hosts/log_hosts.ts"
   },
   "dependencies": {
     "@atproto/api": "^0.13.14",

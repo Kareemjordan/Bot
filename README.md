@@ -1,11 +1,15 @@
 # bsky-lfcnews
+
 Bluesky bot for Liverpool FC news
 
 Start nodemon dev environment
-$npm run dev 
+`$npm run dev`
 
 Build production file
-$npm run build
+`$npm run build`
 
 Build production and run app
-$npm start
+`$npm start`
+
+Log host data
+`$npm run log-hosts`
