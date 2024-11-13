@@ -8,10 +8,11 @@ import theIndependent from "./hosts/the_independent";
 import liverpoolEcho from "./hosts/liverpool_echo";
 import theMirror from "./hosts/the_mirror";
 import theGuardian from "./hosts/the_guardian";
+import liverpoolFootballClub from "./hosts/liverpool_football_club";
 
 dotenv.config();
 
-type postExternalType = {
+type PostExternalType = {
   uri: string | undefined;
   title: string | undefined;
   description: string | undefined;
@@ -43,7 +44,7 @@ async function main() {
     posts.feed.forEach((p) => {
       const embed = p.post.embed;
       if (embed) {
-        const embedExternal = embed.external as postExternalType;
+        const embedExternal = embed.external as PostExternalType;
         if (embedExternal.uri) {
           previousUris.push(embedExternal.uri);
         }
@@ -55,17 +56,19 @@ async function main() {
   const theMirrorData = await theMirror();
   const liverpoolEchoData = await liverpoolEcho();
   const theIndepedentData = await theIndependent();
+  const liverpoolFootballClubData = await liverpoolFootballClub();
 
   const hostData = [
     theGuardianData,
     theMirrorData,
     liverpoolEchoData,
     theIndepedentData,
+    liverpoolFootballClubData,
   ];
 
   hostData.forEach(async (hd) => {
     const { articleUri, hashTag } = hd;
-    if (!previousUris.includes(articleUri)) {
+    if (articleUri && !previousUris.includes(articleUri)) {
       const { title, description, thumb } = await scrapeMeta(agent, articleUri);
       if (title && description) {
         await post(agent, hashTag, articleUri, title, description, thumb);

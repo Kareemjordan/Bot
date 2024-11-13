@@ -8,6 +8,7 @@ import theIndependent from "./the_independent";
 import liverpoolEcho from "./liverpool_echo";
 import theMirror from "./the_mirror";
 import theGuardian from "./the_guardian";
+import liverpoolFootballClub from "./liverpool_football_club";
 
 dotenv.config();
 
@@ -69,12 +70,14 @@ async function main() {
   const theMirrorData = await theMirror();
   const liverpoolEchoData = await liverpoolEcho();
   const theIndepedentData = await theIndependent();
+  const liverpoolFootballClubData = await liverpoolFootballClub();
 
   const hostData = [
     theGuardianData,
     theMirrorData,
     liverpoolEchoData,
     theIndepedentData,
+    liverpoolFootballClubData,
   ];
 
   console.log("Host data");
