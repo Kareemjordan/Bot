@@ -29,13 +29,9 @@ async function main() {
     password: process.env.BSKY_PASSWORD as string,
   });
 
-  const { data: getProfile } = await agent.getProfile({
-    actor: process.env.BSKY_IDENTIFIER as string,
-  });
-
   const { data: posts } = await agent.getAuthorFeed({
-    actor: getProfile.did,
-    limit: 30,
+    actor: process.env.BSKY_IDENTIFIER as string,
+    limit: 50,
   });
 
   const previousUris: string[] = [];
