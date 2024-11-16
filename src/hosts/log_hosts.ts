@@ -2,13 +2,13 @@ import { AtpAgent } from "@atproto/api";
 import * as dotenv from "dotenv";
 
 import { scrapeMeta } from "../utils/data";
-import post from "../utils/post";
 
 import theIndependent from "./the_independent";
 import liverpoolEcho from "./liverpool_echo";
 import theMirror from "./the_mirror";
 import theGuardian from "./the_guardian";
 import liverpoolFootballClub from "./liverpool_football_club";
+import espn from "./espn";
 
 dotenv.config();
 
@@ -67,6 +67,7 @@ async function main() {
   const liverpoolEchoData = await liverpoolEcho();
   const theIndepedentData = await theIndependent();
   const liverpoolFootballClubData = await liverpoolFootballClub();
+  const espnData = await espn();
 
   const hostData = [
     theGuardianData,
@@ -74,6 +75,7 @@ async function main() {
     liverpoolEchoData,
     theIndepedentData,
     liverpoolFootballClubData,
+    espnData,
   ];
 
   console.log("Host data");
