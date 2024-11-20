@@ -40,11 +40,18 @@ export const scrapeMeta = async (agent: AtpAgent, uri: string) => {
         });
         const imageContentType = remoteImage.headers["content-type"];
         const imageBlob = remoteImage.data;
-        const upload = await agent.uploadBlob(imageBlob, {
-          encoding: imageContentType,
-        });
-        if (upload) {
-          thumb = upload.data.blob;
+        const bskyFileLimit = 976560;
+        if (
+          imageBlob &&
+          imageBlob.length > 0 &&
+          imageBlob.length < bskyFileLimit
+        ) {
+          const upload = await agent.uploadBlob(imageBlob, {
+            encoding: imageContentType,
+          });
+          if (upload) {
+            thumb = upload.data.blob;
+          }
         }
       }
     }
