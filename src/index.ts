@@ -4,7 +4,7 @@ import * as dotenv from "dotenv";
 import { scrapeMeta } from "./utils/data";
 import post from "./utils/post";
 
-import theIndependent from "./hosts/the_independent";
+// import theIndependent from "./hosts/the_independent";
 import liverpoolEcho from "./hosts/liverpool_echo";
 import theMirror from "./hosts/the_mirror";
 import theGuardian from "./hosts/the_guardian";
@@ -52,7 +52,7 @@ async function main() {
   const theGuardianData = await theGuardian();
   const theMirrorData = await theMirror();
   const liverpoolEchoData = await liverpoolEcho();
-  const theIndepedentData = await theIndependent();
+  // const theIndepedentData = await theIndependent();
   const liverpoolFootballClubData = await liverpoolFootballClub();
   const espnData = await espn();
 
@@ -60,7 +60,7 @@ async function main() {
     theGuardianData,
     theMirrorData,
     liverpoolEchoData,
-    theIndepedentData,
+    // theIndepedentData,
     liverpoolFootballClubData,
     espnData,
   ];
