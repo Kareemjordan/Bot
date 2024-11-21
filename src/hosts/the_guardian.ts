@@ -11,8 +11,16 @@ const main = async (): Promise<{ articleUri: string; hashTag: string }> => {
   const data: string | undefined = await fetchHTML(`${baseUri}${newsPath}`);
   const $ = cheerio.load(data);
   const title = $("body").find("h3:first");
-  if (title) {
-    const anchor = $("body").find(`[aria-label="${title.text()}"]:first`);
+  const titleText = $(title).text();
+  // Guardian sometimes have a prefix e.g. "Opta Analyst" element inside the H3
+  // Headline should be last element
+  const titleLastElementText = $(title).find("*:last").text();
+  if (titleText || titleLastElementText) {
+    const anchor = $("body").find(
+      `[aria-label="${
+        titleLastElementText ? titleLastElementText : titleText
+      }"]:first`
+    );
     if (anchor) {
       const href = anchor.attr("href");
       if (href) {
