@@ -4,7 +4,7 @@ import * as dotenv from "dotenv";
 import { scrapeMeta } from "./utils/data";
 import post from "./utils/post";
 
-// import theIndependent from "./hosts/the_independent";
+import theIndependent from "./hosts/the_independent";
 import liverpoolEcho from "./hosts/liverpool_echo";
 import theMirror from "./hosts/the_mirror";
 import theGuardian from "./hosts/the_guardian";
@@ -52,7 +52,7 @@ async function main() {
   const theGuardianData = await theGuardian();
   const theMirrorData = await theMirror();
   const liverpoolEchoData = await liverpoolEcho();
-  // const theIndepedentData = await theIndependent();
+  const theIndepedentData = await theIndependent();
   const liverpoolFootballClubData = await liverpoolFootballClub();
   const espnData = await espn();
 
@@ -60,7 +60,7 @@ async function main() {
     theGuardianData,
     theMirrorData,
     liverpoolEchoData,
-    // theIndepedentData,
+    theIndepedentData,
     liverpoolFootballClubData,
     espnData,
   ];
@@ -70,7 +70,16 @@ async function main() {
     if (articleUri && !previousUris.includes(articleUri)) {
       const { title, description, thumb } = await scrapeMeta(agent, articleUri);
       if (title && description) {
-        await post(agent, hashTag, articleUri, title, description, thumb);
+        if (hashTag === "#TheIndependent") {
+          let output = "";
+          output += `${hashTag} | ${articleUri}\n`;
+          output += `Title: ${title}\n`;
+          output += `Description: ${description}\n`;
+          output += `Thumb: ${thumb?.mimeType} (mimetype), ${thumb?.size} (size)\n`;
+          console.log(output);
+        } else {
+          await post(agent, hashTag, articleUri, title, description, thumb);
+        }
       }
     }
   });
