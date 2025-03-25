@@ -4,11 +4,11 @@ import * as dotenv from "dotenv";
 import { scrapeMeta } from "../utils/data";
 
 import theIndependent from "./the_independent";
-import liverpoolEcho from "./liverpool_echo";
 import theMirror from "./the_mirror";
 import theGuardian from "./the_guardian";
-import liverpoolFootballClub from "./liverpool_football_club";
 import espn from "./espn";
+import dailyMail from "./daily_mail";
+import theathletic from "./the_athletic"
 
 dotenv.config();
 
@@ -64,18 +64,18 @@ async function main() {
 
   const theGuardianData = await theGuardian();
   const theMirrorData = await theMirror();
-  const liverpoolEchoData = await liverpoolEcho();
   const theIndepedentData = await theIndependent();
-  const liverpoolFootballClubData = await liverpoolFootballClub();
   const espnData = await espn();
+  const dailyMailData = await dailyMail();
+  const theathleticData = await theathletic();
 
   const hostData = [
     theGuardianData,
     theMirrorData,
-    liverpoolEchoData,
     theIndepedentData,
-    liverpoolFootballClubData,
     espnData,
+    dailyMailData,
+    theathleticData,
   ];
 
   console.log("Host data");

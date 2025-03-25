@@ -9,7 +9,7 @@ const post = async (
   thumb: BlobRef | undefined
 ) => {
   const rt = new RichText({
-    text: `${postText} #LFC`,
+    text: `${postText} #MUFC`,
   });
 
   await rt.detectFacets(agent);

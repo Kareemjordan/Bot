@@ -3,7 +3,7 @@ import * as cheerio from "cheerio";
 import { fetchHTML } from "../utils/data";
 
 const baseUri = "https://www.independent.co.uk";
-const newsPath = "/topic/liverpool-fc";
+const newsPath = "/topic/manchester-united";
 const hashTag = "#TheIndependent";
 
 const main = async (): Promise<{ articleUri: string; hashTag: string }> => {
